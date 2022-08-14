@@ -51,7 +51,7 @@ class PickupAction(Action):
                 self.engine.message_log.add_message(f"You picked up the {item.name}!")
                 return
         
-        raise exeptions.Impossible("There is nothing here to pick up.")
+        raise exceptions.Impossible("There is nothing here to pick up.")
 
 class ItemAction(Action):
     def __init__(
@@ -72,9 +72,9 @@ class ItemAction(Action):
         """Invoke the items ability, this action will be given to provide context."""
         self.item.consumable.activate(self)
 
-class EscapeAction(Action):
+class DropItem(ItemAction):
     def perform(self) -> None:
-        raise SystemExit()
+        self.entity.inventory.drop(self.item)
 
 class WaitAction(Action):
     def perform(self) -> None:
